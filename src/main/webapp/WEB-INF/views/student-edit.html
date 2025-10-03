@@ -2,30 +2,32 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Sửa Sinh viên</title>
+    <title>CHỉnh sửa thông tin Học viên</title>
 </head>
 <body>
 
-<h1>✏️ Sửa học viên</h1>
+<h1> Sửa thông tin học viên</h1>
 
 <form th:action="@{/students/save}" th:object="${student}" method="post">
     <input type="hidden" th:field="*{student_id}"/>
 
-    <label for="name">Tên:</label>
+    <label for="name">Tên học viên</label>
     <input id="name" type="text" th:field="*{name}" required/>
 
-    <label for="theory">Điểm lý thuyết:</label>
-    <input id="theory" type="number" step="0.1" th:field="*{theory}" required/>
-
-    <label for="practice">Điểm thực hành:</label>
+    <label for="practice">Điểm thực hành</label>
     <input id="practice" type="number" step="0.1" th:field="*{practice}" required/>
 
-    <label for="desc">Mô tả:</label>
+    <label for="theory">Điểm lý thuyết</label>
+    <input id="theory" type="number" step="0.1" th:field="*{theory}" required/>
+
+    <label for="eval">Đánh giá</label>
+    <input id="eval" type="text" th:field="*{evaluate}"/>
+
+
+    <label for="desc">Chi tiet</label>
     <textarea id="desc" th:field="*{description}" rows="3"
               placeholder="Nhập mô tả chi tiết..."></textarea>
 
-    <label for="eval">Đánh giá:</label>
-    <input id="eval" type="text" th:field="*{evaluate}"/>
 
     <label for="clazz">Lớp:</label>
     <select id="clazz" th:field="*{clazz}" required>
@@ -37,8 +39,8 @@
     </select>
 
     <div class="actions">
-        <button type="submit">💾 Cập nhật</button>
-        <button type="button" onclick="window.location.href='/students'">⬅️ Thoát</button>
+        <button type="submit">Cập nhật</button>
+        <button type="button" onclick="window.location.href='/students'">Thoát</button>
     </div>
 </form>
 

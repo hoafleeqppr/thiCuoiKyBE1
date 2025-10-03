@@ -15,24 +15,15 @@
             <th>Tên:</th>
             <td>
                 <input type="text" th:field="*{name}"
-                       placeholder="Nhập tên học viên ..."
+                       placeholder="Ten học viên"
                        required minlength="3" maxlength="50"
                        pattern="^[A-Za-zÀ-ỹ\s]+$"
-                       title="Tên chỉ được chứa chữ cái, tối thiểu 3 ký tự"/>
+                       title="Tên thiểu 3 ký tự"/>
             </td>
         </tr>
 
         <tr>
-            <th>Điểm lý thuyết:</th>
-            <td>
-                <input type="number" step="0.1" th:field="*{theory}"
-                       required min="0" max="10"
-                       title="Điểm phải từ 0 đến 10"/>
-            </td>
-        </tr>
-
-        <tr>
-            <th>Điểm thực hành:</th>
+            <th>Điểm thực hành</th>
             <td>
                 <input type="number" step="0.1" th:field="*{practice}"
                        required min="0" max="10"
@@ -41,28 +32,38 @@
         </tr>
 
         <tr>
-            <th>Mô tả:</th>
+            <th>Điểm lý thuyết</th>
+            <td>
+                <input type="number" step="0.1" th:field="*{theory}"
+                       required min="0" max="10"
+                       title="Điểm phải từ 0 đến 10"/>
+            </td>
+        </tr>
+
+
+        <tr>
+            <th>CHi tiet</th>
             <td>
                 <textarea th:field="*{description}" rows="3"
-                          placeholder="Nhập mô tả chi tiết..."
-                          maxlength="200"
+                          placeholder="Nhập mô tả chi tiết"
+                          maxlength="300"
                           required
-                          title="Mô tả tối đa 200 ký tự"></textarea>
+                          title="Mô tả tối đa 300 ký tự"></textarea>
             </td>
         </tr>
 
         <tr>
-            <th>Đánh giá:</th>
+            <th>Đánh giá</th>
             <td>
                 <input type="text" th:field="*{evaluate}"
                        required
-                       maxlength="100"
-                       placeholder="Ví dụ: Giỏi, Khá, Trung bình"/>
+                       maxlength="120"
+                       placeholder="Giỏi, Khá, Trung bình"/>
             </td>
         </tr>
 
         <tr>
-            <th>Lớp:</th>
+            <th>Lớp</th>
             <td>
                 <select th:field="*{clazz}" required>
                     <option value="">-- Chọn lớp --</option>
@@ -76,20 +77,20 @@
     </table>
 
     <div class="actions">
-        <button type="submit" class="btn-save">💾 Lưu</button>
-        <button type="button" class="btn-cancel" onclick="window.location.href='/students'">⬅️ Thoát</button>
+        <button type="submit" class="btn-save">Lưu</button>
+        <button type="button" class="btn-cancel" onclick="window.location.href='/students'">Thoát</button>
     </div>
 </form>
 
 <script>
-    document.getElementById("studentForm").addEventListener("submit", function(event) {
+    document.getElementById("studentForm").addEventListener("submit", function (event) {
         if (!this.checkValidity()) {
             event.preventDefault();
             Swal.fire({
                 icon: 'warning',
-                title: '⚠️ Lỗi dữ liệu',
-                text: 'Vui lòng nhập đầy đủ và đúng thông tin trước khi lưu!',
-                timer: 2000,
+                title: 'Lỗi data',
+                text: 'Vui lòng nhập thông tin trước khi lưu',
+                timer: 4000,
                 showConfirmButton: false,
                 position: 'center-end'
             });

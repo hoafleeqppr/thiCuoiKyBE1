@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Chi tiết Sinh viên</title>
+    <title>Chi tiết Học viên</title>
 </head>
 <body>
 
@@ -10,37 +10,38 @@
 
 <table class="student-info">
     <tr>
-        <th>Tên</th>
+        <th>Tên học viên</th>
         <td th:text="${student.name}"></td>
     </tr>
     <tr>
-        <th>Lớp</th>
+        <th>Lớp học</th>
         <td th:text="${student.clazz.name}"></td>
-    </tr>
-    <tr>
-        <th>Điểm lý thuyết</th>
-        <td th:text="${student.theory}"></td>
     </tr>
     <tr>
         <th>Điểm thực hành</th>
         <td th:text="${student.practice}"></td>
     </tr>
     <tr>
-        <th>Đánh giá</th>
-        <td th:text="${student.evaluate}"></td>
+        <th>Điểm lý thuyết</th>
+        <td th:text="${student.theory}"></td>
     </tr>
     <tr>
-        <th>Mô tả</th>
+        <th>CHi tiết</th>
         <td>
             <textarea rows="4" readonly th:text="${student.description}"></textarea>
         </td>
+    </tr>
+    <tr>
+        <th>Đánh giá</th>
+        <td th:text="${student.evaluate}"></td>
     </tr>
 </table>
 
 <div class="actions">
     <button class="btn-edit"
-            th:onclick="|window.location.href='@{/students/edit/{id}(id=${student.student_id})}'|">✏️Chỉnh sửa</button>
-    <button class="btn-exit" onclick="window.location.href='/students'">⬅️ Thoát</button>
+            th:onclick="|window.location.href='@{/students/edit/{id}(id=${student.student_id})}'|">Sửa
+    </button>
+    <button class="btn-exit" onclick="window.location.href='/students'">Thoát</button>
 </div>
 
 </body>
