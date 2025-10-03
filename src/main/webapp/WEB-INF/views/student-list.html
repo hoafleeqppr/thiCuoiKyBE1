@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Danh sách Sinh viên</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            width: 80%;
+            margin: auto;
+            padding: 40px;
+        }
+        h1 {
+            color: darkblue;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 15px;
+        }
+        table, th, td {
+            border: 1px solid #999;
+        }
+        th, td {
+            padding: 8px 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #eee;
+        }
+        .actions a {
+            margin-right: 10px;
+            text-decoration: none;
+            color: blue;
+        }
+        .actions a:hover {
+            text-decoration: underline;
+        }
+        .top-bar {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .top-bar h1 {
+            margin: 0;
+        }
+        .top-bar .buttons {
+            display: flex;
+            gap: 10px;
+            margin-left: 50px;
+        }
+        .search-form {
+            margin-bottom: 15px;
+        }
+        .search-form form {
+            display: flex;
+            gap: 8px;
+        }
+        button {
+            padding: 6px 12px;
+            border: none;
+            background-color: #3085d6;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #2563eb;
+        }
+        input[type="text"] {
+            padding: 6px 10px;
+            width: 250px;
+            border: 1px solid #999;
+            border-radius: 4px;
+        }
+    </style>
+
+</head>
+<body>
+<div class="top-bar">
+    <h1>Danh sách học viên</h1>
+    <div class="buttons">
+        <button onclick="window.location.href='/students'">🔄 Reload</button>
+        <button onclick="window.location.href='/students/add'">➕ Thêm học viên</button>
+    </div>
+</div>
+
+<div class="search-form">
+    <form th:action="@{/students/search}" method="get">
+        <input type="text" name="keyword" placeholder="Nhập tên học viên" required>
+        <button type="submit">🔍 Tìm kiếm</button>
+    </form>
+</div>
+
+<table>
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>Tên</th>
+        <th>Mô tả</th>
+        <th>Đánh giá</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="student : ${students}">
+        <td th:text="${student.student_id}"></td>
+        <td th:text="${student.name}"></td>
+        <td th:text="${student.description}"></td>
+        <td th:text="${student.evaluate}"></td>
+        <td class="actions">
+            <a th:href="@{|/students/detail/${student.student_id}|}">👁️ Xem</a>
+            <a th:href="@{|/students/edit/${student.student_id}|}">✏️ Sửa</a>
+            <a href="javascript:void(0)"
+               th:attr="data-url=@{|/students/delete/${student.student_id}|}"
+               onclick="confirmDelete(this)">🗑️ Xóa</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<script>
+    function confirmDelete(element) {
+        let url = element.getAttribute("data-url");
+
+        Swal.fire({
+            title: "Xóa học viên",
+            text: "Bạn có chăc xóa học viên này?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Xóa",
+            cancelButtonText: "Hủy"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = url;
+            }
+        });
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<head>
+    <meta charset="UTF-8">
+    <title>Thêm Sinh viên</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 700px;
+            margin: 20px auto;
+        }
+        h1 {
+            color: darkblue;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #f9f9f9;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+        th, td {
+            padding: 10px 15px;
+            text-align: left;
+        }
+        th {
+            width: 180px;
+            background: #f1f1f1;
+            font-weight: bold;
+            color: #333;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        textarea {
+            resize: none;
+        }
+        .actions {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .actions button {
+            margin: 0 10px;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .btn-save {
+            background: #28a745;
+            color: white;
+        }
+        .btn-save:hover {
+            background: #218838;
+        }
+        .btn-cancel {
+            background: #6c757d;
+            color: white;
+        }
+        .btn-cancel:hover {
+            background: #5a6268;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Thêm học viên</h1>
+
+<form id="studentForm" th:action="@{/students/save}" th:object="${student}" method="post">
+    <table>
+        <tr>
+            <th>Tên:</th>
+            <td>
+                <input type="text" th:field="*{name}"
+                       placeholder="Nhập tên học viên ..."
+                       required minlength="3" maxlength="50"
+                       pattern="^[A-Za-zÀ-ỹ\s]+$"
+                       title="Tên chỉ được chứa chữ cái, tối thiểu 3 ký tự"/>
+            </td>
+        </tr>
+
+        <tr>
+            <th>Điểm lý thuyết:</th>
+            <td>
+                <input type="number" step="0.1" th:field="*{theory}"
+                       required min="0" max="10"
+                       title="Điểm phải từ 0 đến 10"/>
+            </td>
+        </tr>
+
+        <tr>
+            <th>Điểm thực hành:</th>
+            <td>
+                <input type="number" step="0.1" th:field="*{practice}"
+                       required min="0" max="10"
+                       title="Điểm phải từ 0 đến 10"/>
+            </td>
+        </tr>
+
+        <tr>
+            <th>Mô tả:</th>
+            <td>
+                <textarea th:field="*{description}" rows="3"
+                          placeholder="Nhập mô tả chi tiết..."
+                          maxlength="200"
+                          required
+                          title="Mô tả tối đa 200 ký tự"></textarea>
+            </td>
+        </tr>
+
+        <tr>
+            <th>Đánh giá:</th>
+            <td>
+                <input type="text" th:field="*{evaluate}"
+                       required
+                       maxlength="100"
+                       placeholder="Ví dụ: Giỏi, Khá, Trung bình"/>
+            </td>
+        </tr>
+
+        <tr>
+            <th>Lớp:</th>
+            <td>
+                <select th:field="*{clazz}" required>
+                    <option value="">-- Chọn lớp --</option>
+                    <option th:each="cls : ${classes}"
+                            th:value="${cls.class_id}"
+                            th:text="${cls.name}">
+                    </option>
+                </select>
+            </td>
+        </tr>
+    </table>
+
+    <div class="actions">
+        <button type="submit" class="btn-save">💾 Lưu</button>
+        <button type="button" class="btn-cancel" onclick="window.location.href='/students'">⬅️ Thoát</button>
+    </div>
+</form>
+
+<script>
+    document.getElementById("studentForm").addEventListener("submit", function(event) {
+        if (!this.checkValidity()) {
+            event.preventDefault();
+            Swal.fire({
+                icon: 'warning',
+                title: '⚠️ Lỗi dữ liệu',
+                text: 'Vui lòng nhập đầy đủ và đúng thông tin trước khi lưu!',
+                timer: 2000,
+                showConfirmButton: false,
+                position: 'center-end'
+            });
+        }
+    });
+</script>
+
+</body>
+</html>

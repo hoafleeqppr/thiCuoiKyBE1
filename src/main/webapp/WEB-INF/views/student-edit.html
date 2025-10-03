@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sửa Sinh viên</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 700px;
+            margin: 30px auto;
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: darkblue;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        form {
+            display: grid;
+            grid-template-columns: 150px 1fr; /* cột trái label 150px, cột phải input chiếm còn lại */
+            gap: 12px 16px; /* hàng cách 12px, cột cách 16px */
+            align-items: center;
+        }
+        label {
+            font-weight: bold;
+        }
+        input, select, textarea {
+            padding: 8px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        textarea {
+            resize: vertical;
+        }
+        .actions {
+            grid-column: span 2; /* hàng này chiếm hết 2 cột */
+            text-align: center;
+            margin-top: 15px;
+        }
+        button {
+            padding: 10px 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+            margin: 0 8px;
+        }
+        button[type="submit"] {
+            background-color: #3085d6;
+            color: white;
+        }
+        button[type="submit"]:hover {
+            background-color: #2563c4;
+        }
+        button[type="button"] {
+            background-color: #5a6268;
+            color: white;
+        }
+        button[type="button"]:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+<body>
+
+<h1>✏️ Sửa học viên</h1>
+
+<form th:action="@{/students/save}" th:object="${student}" method="post">
+    <!-- giữ id để biết là edit -->
+    <input type="hidden" th:field="*{student_id}"/>
+
+    <label for="name">Tên:</label>
+    <input id="name" type="text" th:field="*{name}" required/>
+
+    <label for="theory">Điểm lý thuyết:</label>
+    <input id="theory" type="number" step="0.1" th:field="*{theory}" required/>
+
+    <label for="practice">Điểm thực hành:</label>
+    <input id="practice" type="number" step="0.1" th:field="*{practice}" required/>
+
+    <label for="desc">Mô tả:</label>
+    <textarea id="desc" th:field="*{description}" rows="3"
+              placeholder="Nhập mô tả chi tiết..."></textarea>
+
+    <label for="eval">Đánh giá:</label>
+    <input id="eval" type="text" th:field="*{evaluate}"/>
+
+    <label for="clazz">Lớp:</label>
+    <select id="clazz" th:field="*{clazz}" required>
+        <option th:each="cls : ${classes}"
+                th:value="${cls.class_id}"
+                th:text="${cls.name}"
+                th:selected="${cls.class_id == student.clazz.class_id}">
+        </option>
+    </select>
+
+    <div class="actions">
+        <button type="submit">💾 Cập nhật</button>
+        <button type="button" onclick="window.location.href='/students'">⬅️ Thoát</button>
+    </div>
+</form>
+
+</body>
+</html>
